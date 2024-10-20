@@ -90,12 +90,6 @@
       "target": "api::application.application",
       "inversedBy": "applicants"
     },
-    "company": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::company.company",
-      "inversedBy": "recruiters"
-    },
     "jobs": {
       "type": "relation",
       "relation": "oneToMany",
@@ -110,6 +104,12 @@
       ],
       "required": true,
       "default": "jobseeker"
+    },
+    "companies": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::company.company",
+      "mappedBy": "recruiter"
     }
   }
 }

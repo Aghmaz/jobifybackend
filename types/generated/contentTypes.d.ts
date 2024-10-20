@@ -423,9 +423,9 @@ export interface ApiCompanyCompany extends Schema.CollectionType {
     location: Attribute.Text & Attribute.Required;
     logo: Attribute.String & Attribute.Required;
     website: Attribute.String & Attribute.Required;
-    recruiters: Attribute.Relation<
+    recruiter: Attribute.Relation<
       'api::company.company',
-      'oneToMany',
+      'manyToOne',
       'plugin::users-permissions.user'
     >;
     createdAt: Attribute.DateTime;
@@ -483,6 +483,7 @@ export interface ApiJobJob extends Schema.CollectionType {
       'plugin::users-permissions.user'
     >;
     experience: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<1>;
+    openings: Attribute.BigInteger;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -912,11 +913,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'api::application.application'
     >;
-    company: Attribute.Relation<
-      'plugin::users-permissions.user',
-      'manyToOne',
-      'api::company.company'
-    >;
     jobs: Attribute.Relation<
       'plugin::users-permissions.user',
       'oneToMany',
@@ -925,6 +921,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     userRole: Attribute.Enumeration<['jobseeker', 'recruiter']> &
       Attribute.Required &
       Attribute.DefaultTo<'jobseeker'>;
+    companies: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::company.company'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

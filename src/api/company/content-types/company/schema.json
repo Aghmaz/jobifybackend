@@ -33,11 +33,11 @@
       "type": "string",
       "required": true
     },
-    "recruiters": {
+    "recruiter": {
       "type": "relation",
-      "relation": "oneToMany",
+      "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
-      "mappedBy": "company"
+      "inversedBy": "companies"
     }
   }
 }
