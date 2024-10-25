@@ -71,18 +71,8 @@
     "profilePicture": {
       "type": "string"
     },
-    "skills": {
-      "type": "text"
-    },
     "bio": {
       "type": "text"
-    },
-    "resume": {
-      "type": "string"
-    },
-    "savedJobs": {
-      "type": "text",
-      "required": false
     },
     "applications": {
       "type": "relation",
@@ -110,6 +100,15 @@
       "relation": "oneToMany",
       "target": "api::company.company",
       "mappedBy": "recruiter"
+    },
+    "savedJobs": {
+      "type": "json"
+    },
+    "skills": {
+      "type": "json"
+    },
+    "resume": {
+      "type": "text"
     }
   }
 }

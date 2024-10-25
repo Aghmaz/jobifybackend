@@ -904,10 +904,7 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     >;
     address: Attribute.Text;
     profilePicture: Attribute.String;
-    skills: Attribute.Text;
     bio: Attribute.Text;
-    resume: Attribute.String;
-    savedJobs: Attribute.Text;
     applications: Attribute.Relation<
       'plugin::users-permissions.user',
       'manyToOne',
@@ -926,6 +923,9 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToMany',
       'api::company.company'
     >;
+    savedJobs: Attribute.JSON;
+    skills: Attribute.JSON;
+    resume: Attribute.Text;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
