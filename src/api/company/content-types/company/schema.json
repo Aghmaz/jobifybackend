@@ -33,11 +33,16 @@
       "type": "string",
       "required": true
     },
-    "recruiter": {
+    "recruiters": {
       "type": "relation",
-      "relation": "manyToOne",
-      "target": "plugin::users-permissions.user",
-      "inversedBy": "companies"
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user"
+    },
+    "jobs": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::job.job",
+      "mappedBy": "company"
     }
   }
 }

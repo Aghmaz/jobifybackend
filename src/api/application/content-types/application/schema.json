@@ -12,20 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "applicants": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "plugin::users-permissions.user",
-      "mappedBy": "applications"
-    },
-    "jobName": {
-      "type": "string",
-      "required": true
-    },
-    "jobSalary": {
-      "type": "biginteger",
-      "required": true
-    },
     "status": {
       "type": "enumeration",
       "enum": [
@@ -35,7 +21,13 @@
       ],
       "default": "pending"
     },
-    "jobs": {
+    "applicant": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "applicant"
+    },
+    "job": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::job.job",

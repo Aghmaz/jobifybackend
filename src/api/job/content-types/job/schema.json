@@ -40,12 +40,6 @@
         "others"
       ]
     },
-    "applications": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::application.application",
-      "mappedBy": "jobs"
-    },
     "description": {
       "type": "text",
       "required": true
@@ -66,13 +60,6 @@
       "default": "open",
       "required": true
     },
-    "companyName": {
-      "type": "string"
-    },
-    "companyLogo": {
-      "type": "string",
-      "required": true
-    },
     "recruiter": {
       "type": "relation",
       "relation": "manyToOne",
@@ -86,6 +73,18 @@
     },
     "openings": {
       "type": "biginteger"
+    },
+    "company": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::company.company",
+      "inversedBy": "jobs"
+    },
+    "applications": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::application.application",
+      "mappedBy": "job"
     }
   }
 }

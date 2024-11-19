@@ -374,16 +374,14 @@ export interface ApiApplicationApplication extends Schema.CollectionType {
     draftAndPublish: true;
   };
   attributes: {
-    applicants: Attribute.Relation<
-      'api::application.application',
-      'oneToMany',
-      'plugin::users-permissions.user'
-    >;
-    jobName: Attribute.String & Attribute.Required;
-    jobSalary: Attribute.BigInteger & Attribute.Required;
     status: Attribute.Enumeration<['pending', 'accepted', 'rejected']> &
       Attribute.DefaultTo<'pending'>;
-    jobs: Attribute.Relation<
+    applicant: Attribute.Relation<
+      'api::application.application',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    job: Attribute.Relation<
       'api::application.application',
       'manyToOne',
       'api::job.job'
@@ -423,10 +421,15 @@ export interface ApiCompanyCompany extends Schema.CollectionType {
     location: Attribute.Text & Attribute.Required;
     logo: Attribute.String & Attribute.Required;
     website: Attribute.String & Attribute.Required;
-    recruiter: Attribute.Relation<
+    recruiters: Attribute.Relation<
       'api::company.company',
-      'manyToOne',
+      'oneToMany',
       'plugin::users-permissions.user'
+    >;
+    jobs: Attribute.Relation<
+      'api::company.company',
+      'oneToMany',
+      'api::job.job'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -464,19 +467,12 @@ export interface ApiJobJob extends Schema.CollectionType {
     industry: Attribute.Enumeration<
       ['business', 'banking', 'education', 'telecommunication', 'others']
     >;
-    applications: Attribute.Relation<
-      'api::job.job',
-      'oneToMany',
-      'api::application.application'
-    >;
     description: Attribute.Text & Attribute.Required;
     salary: Attribute.BigInteger & Attribute.Required;
     location: Attribute.Text;
     status: Attribute.Enumeration<['open', 'closed']> &
       Attribute.Required &
       Attribute.DefaultTo<'open'>;
-    companyName: Attribute.String;
-    companyLogo: Attribute.String & Attribute.Required;
     recruiter: Attribute.Relation<
       'api::job.job',
       'manyToOne',
@@ -484,6 +480,16 @@ export interface ApiJobJob extends Schema.CollectionType {
     >;
     experience: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<1>;
     openings: Attribute.BigInteger;
+    company: Attribute.Relation<
+      'api::job.job',
+      'manyToOne',
+      'api::company.company'
+    >;
+    applications: Attribute.Relation<
+      'api::job.job',
+      'oneToMany',
+      'api::application.application'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -905,11 +911,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     address: Attribute.Text;
     profilePicture: Attribute.String;
     bio: Attribute.Text;
-    applications: Attribute.Relation<
-      'plugin::users-permissions.user',
-      'manyToOne',
-      'api::application.application'
-    >;
     jobs: Attribute.Relation<
       'plugin::users-permissions.user',
       'oneToMany',
@@ -918,14 +919,18 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     userRole: Attribute.Enumeration<['jobseeker', 'recruiter']> &
       Attribute.Required &
       Attribute.DefaultTo<'jobseeker'>;
-    companies: Attribute.Relation<
+    savedJobs: Attribute.Relation<
       'plugin::users-permissions.user',
-      'oneToMany',
-      'api::company.company'
+      'manyToMany',
+      'api::job.job'
     >;
-    savedJobs: Attribute.JSON;
     skills: Attribute.JSON;
     resume: Attribute.Text;
+    applicant: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::application.application'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
